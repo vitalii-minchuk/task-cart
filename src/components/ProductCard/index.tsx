@@ -6,6 +6,8 @@ interface ProductCardProps {
   isFetching: boolean;
   deleteProduct: (id: string) => void;
   updateProduct: (obj: Product) => void;
+  addToCart: (obj: Product) => void;
+  removeItemFromCart: (id: string) => void;
 }
 
 function ProductCard({
@@ -13,14 +15,20 @@ function ProductCard({
   isFetching,
   deleteProduct,
   updateProduct,
+  addToCart,
+  removeItemFromCart,
 }: ProductCardProps) {
   const handleDeleteProduct = () => {
     deleteProduct(product.id!);
+    if (product.inCart) {
+      removeItemFromCart(product.id!);
+    }
   };
 
   const handleAddProductToCart = () => {
     const productInCart = { ...product, inCart: true };
     updateProduct(productInCart);
+    addToCart(productInCart);
   };
 
   return (

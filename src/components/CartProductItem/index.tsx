@@ -1,30 +1,34 @@
-import { CartItem } from '../../types';
+import { CartItem, Product } from '../../types';
 import styles from './CartProductItem.module.css';
 
 type CartProductItemProps = {
   item: CartItem;
-  decreaseQuantity: (item: CartItem) => void;
-  increaseQuantity: (item: CartItem) => void;
+  isFetching: boolean;
+  updateProduct: (obj: Product) => void;
+  decreaseQuantity: (obj: CartItem) => void;
+  increaseQuantity: (obj: CartItem) => void;
   removeItemFromCart: (id: string) => void;
 };
 
 function CartProductItem({
   item,
+  updateProduct,
   removeItemFromCart,
   increaseQuantity,
   decreaseQuantity,
+  isFetching,
 }: CartProductItemProps) {
   const sum = item.price * item.quantity;
 
   const handleDelete = () => {
-    removeItemFromCart(item.id!);
-    // updateProduct({
-    //   title: item.title,
-    //   description: item.description,
-    //   id: item.product_id,
-    //   price: item.price,
-    //   inCart: false,
-    // });
+    removeItemFromCart(item.product_id);
+    updateProduct({
+      title: item.title,
+      description: item.description,
+      id: item.product_id,
+      price: item.price,
+      inCart: false,
+    });
   };
   return (
     <div className={styles.box}>
@@ -41,7 +45,7 @@ function CartProductItem({
         </button>
         <p>{sum}</p>
       </div>
-      <button type="button" onClick={handleDelete}>
+      <button disabled={isFetching} type="button" onClick={handleDelete}>
         delete
       </button>
     </div>
