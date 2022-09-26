@@ -10,18 +10,20 @@ function App() {
   return (
     <>
       <Header />
-      <Route path={Routes.HOME}>
-        <Main />
-      </Route>
-      <Route path={Routes.CART}>
-        <Cart />
-      </Route>
-      <Route path={Routes.EDIT}>
-        <Edit />
-      </Route>
-      <Route path={Routes.CREATE}>
-        <Create />
-      </Route>
+      <main>
+        <Route path={Routes.HOME}>
+          <Main />
+        </Route>
+        <Route path={Routes.CART}>
+          <Cart />
+        </Route>
+        <Route path={Routes.EDIT}>
+          <Edit />
+        </Route>
+        <Route path={Routes.CREATE}>
+          <Create />
+        </Route>
+      </main>
     </>
   );
 }
