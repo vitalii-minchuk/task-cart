@@ -1,0 +1,21 @@
+.header {
+    width: 100%;
+    background-color: blue;
+    color: white;
+}
+
+.wrapper {
+    max-width: 1170px;
+    height: 80px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.gitBtn {
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
