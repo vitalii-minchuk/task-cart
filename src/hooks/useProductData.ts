@@ -1,19 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import API from '../api';
 import { Product } from '../types';
-
-const BASE_URL = 'https://632e01bab37236d2ebe4bebc.mockapi.io/';
 
 function useProductData() {
   const [products, setProducts] = useState<Product[]>([]);
   const [isFetching, setIsFetching] = useState(false);
   const [fetchError, setFetchError] = useState('');
 
-  console.log('fetch', products);
   useEffect(() => {
     const getAllProducts = async () => {
       try {
         setIsFetching(true);
-        const result = await fetch(`${BASE_URL}/products`);
+        const result = await API.getProducts();
         if (!result.ok) {
           throw new Error(result.statusText);
         }
@@ -31,16 +29,10 @@ function useProductData() {
     getAllProducts();
   }, []);
 
-  const createNewProduct = async (obj: Product) => {
+  const createNewProduct = useCallback(async (obj: Product) => {
     try {
       setIsFetching(true);
-      const result = await fetch(`${BASE_URL}/products`, {
-        method: 'POST',
-        body: JSON.stringify(obj),
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        },
-      });
+      const result = await API.createProduct(obj);
       if (!result.ok) {
         throw new Error(result.statusText);
       }
@@ -52,14 +44,12 @@ function useProductData() {
     } finally {
       setIsFetching(false);
     }
-  };
+  }, []);
 
-  const deleteProduct = async (id: string) => {
+  const deleteProduct = useCallback(async (id: string) => {
     try {
       setIsFetching(true);
-      const result = await fetch(`${BASE_URL}/products/${id}`, {
-        method: 'DELETE',
-      });
+      const result = await API.removeProduct(id);
       if (!result.ok) {
         throw new Error(result.statusText);
       }
@@ -70,18 +60,12 @@ function useProductData() {
     } finally {
       setIsFetching(false);
     }
-  };
+  }, []);
 
-  const updateProduct = async (obj: Product) => {
+  const updateProduct = useCallback(async (obj: Product) => {
     try {
       setIsFetching(true);
-      const result = await fetch(`${BASE_URL}/products/${obj.id}`, {
-        method: 'PUT',
-        body: JSON.stringify(obj),
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        },
-      });
+      const result = await API.editProduct(obj);
       if (!result.ok) {
         throw new Error(result.statusText);
       }
@@ -92,7 +76,7 @@ function useProductData() {
     } finally {
       setIsFetching(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     if (!fetchError) return;
@@ -103,14 +87,25 @@ function useProductData() {
     return () => clearTimeout(timer);
   }, [fetchError]);
 
-  return {
-    products,
-    isFetching,
-    fetchError,
-    deleteProduct,
-    updateProduct,
-    createNewProduct,
-  };
+  const values = useMemo(
+    () => ({
+      products,
+      isFetching,
+      fetchError,
+      deleteProduct,
+      updateProduct,
+      createNewProduct,
+    }),
+    [
+      createNewProduct,
+      deleteProduct,
+      fetchError,
+      isFetching,
+      products,
+      updateProduct,
+    ]
+  );
+  return values;
 }
 
 export default useProductData;

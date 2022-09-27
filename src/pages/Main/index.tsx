@@ -4,14 +4,14 @@ import Button from '../../components/common/Button';
 import Pagination from '../../components/Pagination';
 import ProductCard from '../../components/ProductCard';
 import Link from '../../components/Routing/Link';
-import useCartData from '../../hooks/useCartData';
 import usePagination from '../../hooks/usePagination';
 import useProductData from '../../hooks/useProductData';
 import { Product, Routes } from '../../types';
 import Loader from '../../components/common/Loader';
+import { useShoppingCartContext } from '../../context/ShoppingCartContext';
 
 function Main() {
-  const { addToCart, removeItemFromCart } = useCartData();
+  const { addToCart, removeItemFromCart } = useShoppingCartContext();
   const { isFetching, products, updateProduct, deleteProduct, fetchError } =
     useProductData();
   const [search, setSearch] = useState('');
@@ -33,12 +33,15 @@ function Main() {
         <Loader isFetching={isFetching} />
         <div className={styles.appBar}>
           <input
+            placeholder="Search..."
             className={styles.input}
             onChange={(e) => setSearch(e.target.value)}
             type="text"
           />
           <Link href={Routes.CREATE}>
-            <Button color="blue">create new</Button>
+            <Button size="big" color="blue">
+              + create new
+            </Button>
           </Link>
         </div>
         <div className={styles.content}>

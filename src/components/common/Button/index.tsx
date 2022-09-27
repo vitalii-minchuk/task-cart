@@ -7,7 +7,7 @@ interface ButtonProps {
   onClick?: any;
   color: string;
   disabled?: boolean;
-  size?: 'small';
+  size?: 'small' | 'big';
 }
 
 function Button({

@@ -14,6 +14,12 @@
     font-size: 10px;
 }
 
+.big {
+    height: 50px;
+    padding: 0 20px;
+    font-size: 18px;
+}
+
 .button:disabled {
     opacity: 0.5;
 }

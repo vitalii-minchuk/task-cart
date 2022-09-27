@@ -1,9 +1,9 @@
 import styles from './Cart.module.css';
 import BreadCrumb from '../../components/BreadCrumb';
 import CartProductItem from '../../components/CartProductItem';
-import useCartData from '../../hooks/useCartData';
 import useProductData from '../../hooks/useProductData';
 import Loader from '../../components/common/Loader';
+import { useShoppingCartContext } from '../../context/ShoppingCartContext';
 
 function Cart() {
   const { updateProduct } = useProductData();
@@ -12,13 +12,15 @@ function Cart() {
     isFetching,
     totalPrice,
     removeItemFromCart,
-    decreaseQuantity,
     increaseQuantity,
-  } = useCartData();
+    decreaseQuantity,
+    fetchError,
+  } = useShoppingCartContext();
   return (
     <section className={styles.container}>
       <BreadCrumb />
       <Loader isFetching={isFetching} />
+      {fetchError && <p>{fetchError}</p>}
       <h1 className={styles.totalPrice}>Total Price: {totalPrice}</h1>
       <div className={styles.box}>
         {cartItems?.map((item) => (

@@ -1,8 +1,10 @@
+import { useShoppingCartContext } from '../../context/ShoppingCartContext';
 import { Routes } from '../../types';
 import Link from '../Routing/Link';
 import styles from './Header.module.css';
 
 function Header() {
+  const { totalQuantity } = useShoppingCartContext();
   return (
     <header className={styles.header}>
       <div className={styles.wrapper}>
@@ -52,6 +54,9 @@ function Header() {
                 />
               </svg>
             </Link>
+            {!!totalQuantity && (
+              <div className={styles.total}>{totalQuantity}</div>
+            )}
           </div>
         </div>
       </div>
