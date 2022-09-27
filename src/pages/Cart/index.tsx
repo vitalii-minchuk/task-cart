@@ -1,8 +1,9 @@
-import AppBar from '../../components/AppBar';
+import styles from './Cart.module.css';
 import BreadCrumb from '../../components/BreadCrumb';
 import CartProductItem from '../../components/CartProductItem';
 import useCartData from '../../hooks/useCartData';
 import useProductData from '../../hooks/useProductData';
+import Loader from '../../components/common/Loader';
 
 function Cart() {
   const { updateProduct } = useProductData();
@@ -15,12 +16,11 @@ function Cart() {
     increaseQuantity,
   } = useCartData();
   return (
-    <section>
+    <section className={styles.container}>
       <BreadCrumb />
-      <AppBar />
-      <h1>Total Price: {totalPrice}</h1>
-      {isFetching && <p>Loading...</p>}
-      <div>
+      <Loader isFetching={isFetching} />
+      <h1 className={styles.totalPrice}>Total Price: {totalPrice}</h1>
+      <div className={styles.box}>
         {cartItems?.map((item) => (
           <CartProductItem
             updateProduct={updateProduct}

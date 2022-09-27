@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import styles from './Edit.module.css';
 import BreadCrumb from '../../components/BreadCrumb';
 import ProductForm from '../../components/ProductForm';
 import goBackHome from '../../components/Routing/goBackHome';
 import useProductData from '../../hooks/useProductData';
 import { Product } from '../../types';
+import Loader from '../../components/common/Loader';
 
 function Edit() {
   const { fetchError, isFetching, updateProduct } = useProductData();
@@ -15,18 +17,15 @@ function Edit() {
     goBackHome();
   };
   return (
-    <section>
+    <section className={styles.container}>
       <BreadCrumb />
+      <Loader isFetching={isFetching} />
       {fetchError && <p>{fetchError}</p>}
-      {isFetching ? (
-        <p>Loading...</p>
-      ) : (
-        <ProductForm
-          values={newProduct}
-          handleSave={handleSave}
-          setValues={setProduct}
-        />
-      )}
+      <ProductForm
+        values={newProduct}
+        handleSave={handleSave}
+        setValues={setProduct}
+      />
     </section>
   );
 }

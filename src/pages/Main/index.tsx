@@ -9,7 +9,6 @@ import usePagination from '../../hooks/usePagination';
 import useProductData from '../../hooks/useProductData';
 import { Product, Routes } from '../../types';
 import Loader from '../../components/common/Loader';
-import Input from '../../components/common/Input';
 
 function Main() {
   const { addToCart, removeItemFromCart } = useCartData();
@@ -33,7 +32,11 @@ function Main() {
       <div className={styles.wrapper}>
         <Loader isFetching={isFetching} />
         <div className={styles.appBar}>
-          <Input onChange={(e) => setSearch(e.target.value)} type="text" />
+          <input
+            className={styles.input}
+            onChange={(e) => setSearch(e.target.value)}
+            type="text"
+          />
           <Link href={Routes.CREATE}>
             <Button color="blue">create new</Button>
           </Link>

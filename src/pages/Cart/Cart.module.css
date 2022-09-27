@@ -1,0 +1,15 @@
+.container {
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+.totalPrice {
+    padding: 0 15px 20px;
+}
+
+.box {
+    padding: 0 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}

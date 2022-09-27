@@ -1,6 +1,8 @@
 import { Dispatch, FormEvent, SetStateAction } from 'react';
 import useValidation from '../../hooks/useValidation';
 import { Product } from '../../types';
+import Button from '../common/Button';
+import styles from './ProductForm.module.css';
 
 interface IProductForm {
   values: Product;
@@ -17,42 +19,62 @@ function ProductForm({ values, setValues, handleSave }: IProductForm) {
   };
 
   return (
-    <form>
-      <label htmlFor="title">
-        Product name:
-        <input
-          onBlur={handleTouche}
-          value={values.title}
-          onChange={handleChange}
-          type="text"
-          id="title"
-        />
-      </label>
-      {errors.title && touched.title && <p>{errors.title}</p>}
-      <label htmlFor="price">
-        Product price:
-        <input
-          onBlur={handleTouche}
-          value={values.price}
-          onChange={handleChange}
-          type="number"
-          id="price"
-        />
-      </label>
-      {errors.price && touched.price && <p>{errors.price}</p>}
-      <label htmlFor="description">
-        Product price:
-        <textarea
-          onBlur={handleTouche}
-          value={values.description}
-          onChange={handleChange}
-          id="description"
-        />
-      </label>
-      {errors.description && touched.description && <p>{errors.description}</p>}
-      <button onClick={handleSubmit} disabled={!isValid} type="submit">
+    <form className={styles.box}>
+      <div className={styles.inputBox}>
+        <label className={styles.label} htmlFor="title">
+          Product name:
+          <input
+            className={styles.input}
+            onBlur={handleTouche}
+            value={values.title}
+            onChange={handleChange}
+            type="text"
+            id="title"
+          />
+        </label>
+        {errors.title && touched.title && (
+          <p className={styles.errorMessage}>{errors.title}</p>
+        )}
+      </div>
+      <div className={styles.inputBox}>
+        <label className={styles.label} htmlFor="price">
+          Product price:
+          <input
+            className={styles.input}
+            onBlur={handleTouche}
+            value={values.price}
+            onChange={handleChange}
+            type="number"
+            id="price"
+          />
+        </label>
+        {errors.price && touched.price && (
+          <p className={styles.errorMessage}>{errors.price}</p>
+        )}
+      </div>
+      <div className={styles.inputBox}>
+        <label className={styles.label} htmlFor="description">
+          Product description:
+          <textarea
+            className={styles.textarea}
+            onBlur={handleTouche}
+            value={values.description}
+            onChange={handleChange}
+            id="description"
+          />
+        </label>
+        {errors.description && touched.description && (
+          <p className={styles.errorMessage}>{errors.description}</p>
+        )}
+      </div>
+      <Button
+        color="blue"
+        type="submit"
+        onClick={handleSubmit}
+        disabled={!isValid}
+      >
         save
-      </button>
+      </Button>
     </form>
   );
 }

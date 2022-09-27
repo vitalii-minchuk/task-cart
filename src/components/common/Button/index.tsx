@@ -1,23 +1,23 @@
-import { MouseEventHandler, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import styles from './Button.module.css';
 
-interface ButtonProps<T> {
+interface ButtonProps {
   type?: 'submit' | 'button';
   children: ReactNode;
-  onClick?: T;
+  onClick?: any;
   color: string;
   disabled?: boolean;
   size?: 'small';
 }
 
-function Button<T extends MouseEventHandler<HTMLButtonElement> | undefined>({
+function Button({
   children,
   type,
   onClick,
   color,
   disabled,
   size,
-}: ButtonProps<T>) {
+}: ButtonProps) {
   return (
     <button
       disabled={disabled}

@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import styles from './Create.module.css';
 import BreadCrumb from '../../components/BreadCrumb';
+import Loader from '../../components/common/Loader';
 import ProductForm from '../../components/ProductForm';
 import goBackHome from '../../components/Routing/goBackHome';
 import useProductData from '../../hooks/useProductData';
@@ -14,8 +16,8 @@ function Create() {
     inCart: false,
   });
 
-  const handleSave = () => {
-    createNewProduct(newProduct);
+  const handleSave = async () => {
+    await createNewProduct(newProduct);
     setProduct({
       title: '',
       description: '',
@@ -26,9 +28,9 @@ function Create() {
   };
 
   return (
-    <section>
+    <section className={styles.container}>
       <BreadCrumb />
-      {isFetching && <p>Loading...</p>}
+      <Loader isFetching={isFetching} />
       {fetchError && <p>{fetchError}</p>}
       <ProductForm
         values={newProduct}
