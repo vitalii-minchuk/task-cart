@@ -1,0 +1,31 @@
+.box {
+    position: fixed;
+    z-index: 300;
+    top:87px;
+    left: 50%;
+    color: white;
+    border-radius: 8px;
+    transform:translateX(-50%);
+    width: 320px;
+    height: 50px;
+    text-align: center;
+    font-size: 18px;
+    line-height: 50px;
+}
+
+.error {
+    background-color: #ab003c;
+}
+
+.success {
+    background-color: #4caf50;
+}
+
+.show {
+    visibility: visible;
+}
+
+.hide {
+    visibility: hidden;
+
+}

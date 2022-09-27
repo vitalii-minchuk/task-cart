@@ -6,6 +6,7 @@ function useProductData() {
   const [products, setProducts] = useState<Product[]>([]);
   const [isFetching, setIsFetching] = useState(false);
   const [fetchError, setFetchError] = useState('');
+  const [fetchSuccess, setFetchSuccess] = useState('');
 
   useEffect(() => {
     const getAllProducts = async () => {
@@ -17,7 +18,7 @@ function useProductData() {
         }
         const data = await result.json();
         setProducts(data.reverse());
-        setFetchError('');
+        setFetchSuccess('Success!');
       } catch (error: any) {
         setFetchError(error.message);
         setProducts([]);
@@ -36,7 +37,7 @@ function useProductData() {
       if (!result.ok) {
         throw new Error(result.statusText);
       }
-      setFetchError('');
+      setFetchSuccess('Product has been created');
       const data = await result.json();
       setProducts((prev) => [data, ...prev]);
     } catch (error: any) {
@@ -53,7 +54,7 @@ function useProductData() {
       if (!result.ok) {
         throw new Error(result.statusText);
       }
-      setFetchError('');
+      setFetchSuccess('Product has been deleted');
       setProducts((prev) => prev.filter((el) => el.id !== id));
     } catch (error: any) {
       setFetchError(error.message);
@@ -69,7 +70,7 @@ function useProductData() {
       if (!result.ok) {
         throw new Error(result.statusText);
       }
-      setFetchError('');
+      setFetchSuccess('Product has been updated');
       setProducts((prev) => prev.map((el) => (el.id === obj.id ? obj : el)));
     } catch (error: any) {
       setFetchError(error.message);
@@ -87,6 +88,15 @@ function useProductData() {
     return () => clearTimeout(timer);
   }, [fetchError]);
 
+  useEffect(() => {
+    if (!fetchSuccess) return;
+    const timer = setTimeout(() => {
+      setFetchSuccess('');
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [fetchSuccess]);
+
   const values = useMemo(
     () => ({
       products,
@@ -94,6 +104,7 @@ function useProductData() {
       fetchError,
       deleteProduct,
       updateProduct,
+      fetchSuccess,
       createNewProduct,
     }),
     [
@@ -102,6 +113,7 @@ function useProductData() {
       fetchError,
       isFetching,
       products,
+      fetchSuccess,
       updateProduct,
     ]
   );

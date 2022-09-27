@@ -16,6 +16,7 @@ interface IShoppingCartContext {
   totalPrice: number;
   totalQuantity: number;
   fetchError: string;
+  fetchSuccess: string;
   addToCart: (obj: Product) => void;
   removeItemFromCart: (id: string) => void;
   updateCartItem: (obj: CartItem) => void;
@@ -37,6 +38,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isFetching, setIsFetching] = useState(false);
   const [fetchError, setFetchError] = useState('');
+  const [fetchSuccess, setFetchSuccess] = useState('');
 
   const totalPrice = cartItems.reduce(
     (acc, el) => acc + el.price * el.quantity,
@@ -55,7 +57,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
         }
         const data = await result.json();
         setCartItems(data);
-        setFetchError('');
+        setFetchSuccess('Success!');
       } catch (error: any) {
         setFetchError(error.message);
         setCartItems([]);
@@ -80,7 +82,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
       if (!result.ok) {
         throw new Error(result.statusText);
       }
-      setFetchError('');
+      setFetchSuccess('Item has been added to the cart');
       const data = await result.json();
       setCartItems((prev) => [data, ...prev]);
     } catch (error: any) {
@@ -101,7 +103,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
         if (!result.ok) {
           throw new Error(result.statusText);
         }
-        setFetchError('');
+        setFetchSuccess('Item has been removed');
         setCartItems((prev) => prev.filter((el) => el.product_id !== id));
       } catch (error: any) {
         setFetchError(error.message);
@@ -119,7 +121,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
       if (!result.ok) {
         throw new Error(result.statusText);
       }
-      setFetchError('');
+      setFetchSuccess('Item has been updated');
     } catch (error: any) {
       setFetchError(error.message);
     } finally {
@@ -164,6 +166,15 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     return () => clearTimeout(timer);
   }, [fetchError]);
 
+  useEffect(() => {
+    if (!fetchSuccess) return;
+    const timer = setTimeout(() => {
+      setFetchSuccess('');
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [fetchSuccess]);
+
   const values = useMemo(
     () => ({
       fetchError,
@@ -176,6 +187,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
       updateCartItem,
       increaseQuantity,
       decreaseQuantity,
+      fetchSuccess,
     }),
     [
       cartItems,
@@ -186,6 +198,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
       removeItemFromCart,
       totalPrice,
       totalQuantity,
+      fetchSuccess,
       updateCartItem,
     ]
   );

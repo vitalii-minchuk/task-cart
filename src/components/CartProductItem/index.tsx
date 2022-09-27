@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { RefObject, useState } from 'react';
 import { CartItem, Product } from '../../types';
 import Button from '../common/Button';
 import Modal from '../common/Modal';
@@ -7,6 +7,7 @@ import styles from './CartProductItem.module.css';
 type CartProductItemProps = {
   item: CartItem;
   isFetching: boolean;
+  snackBarRef: RefObject<HTMLDivElement>;
   updateProduct: (obj: Product) => void;
   decreaseQuantity: (obj: CartItem) => void;
   increaseQuantity: (obj: CartItem) => void;
@@ -20,6 +21,7 @@ function CartProductItem({
   increaseQuantity,
   decreaseQuantity,
   isFetching,
+  snackBarRef,
 }: CartProductItemProps) {
   const [open, setOpen] = useState(false);
   const sum = item.price * item.quantity;
@@ -37,6 +39,8 @@ function CartProductItem({
       price: item.price,
       inCart: false,
     });
+
+    // snackBarRef.current?.showSnackbar();
   };
   return (
     <div className={styles.box}>

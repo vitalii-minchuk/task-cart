@@ -1,9 +1,11 @@
+import { useRef } from 'react';
 import styles from './Cart.module.css';
 import BreadCrumb from '../../components/BreadCrumb';
 import CartProductItem from '../../components/CartProductItem';
 import useProductData from '../../hooks/useProductData';
 import Loader from '../../components/common/Loader';
 import { useShoppingCartContext } from '../../context/ShoppingCartContext';
+import SnackBar from '../../components/common/SnackBar';
 
 function Cart() {
   const { updateProduct } = useProductData();
@@ -14,17 +16,20 @@ function Cart() {
     removeItemFromCart,
     increaseQuantity,
     decreaseQuantity,
+    fetchSuccess,
     fetchError,
   } = useShoppingCartContext();
+  const snackBarRef = useRef<HTMLDivElement>(null);
+
   return (
     <section className={styles.container}>
       <BreadCrumb />
       <Loader isFetching={isFetching} />
-      {fetchError && <p>{fetchError}</p>}
       <h1 className={styles.totalPrice}>Total Price: {totalPrice}</h1>
       <div className={styles.box}>
         {cartItems?.map((item) => (
           <CartProductItem
+            snackBarRef={snackBarRef}
             updateProduct={updateProduct}
             isFetching={isFetching}
             decreaseQuantity={decreaseQuantity}
@@ -35,6 +40,11 @@ function Cart() {
           />
         ))}
       </div>
+      <SnackBar
+        ref={snackBarRef}
+        fetchSuccess={fetchSuccess}
+        fetchError={fetchError}
+      />
     </section>
   );
 }

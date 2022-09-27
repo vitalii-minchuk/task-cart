@@ -9,11 +9,18 @@ import useProductData from '../../hooks/useProductData';
 import { Product, Routes } from '../../types';
 import Loader from '../../components/common/Loader';
 import { useShoppingCartContext } from '../../context/ShoppingCartContext';
+import SnackBar from '../../components/common/SnackBar';
 
 function Main() {
   const { addToCart, removeItemFromCart } = useShoppingCartContext();
-  const { isFetching, products, updateProduct, deleteProduct, fetchError } =
-    useProductData();
+  const {
+    isFetching,
+    products,
+    fetchSuccess,
+    updateProduct,
+    deleteProduct,
+    fetchError,
+  } = useProductData();
   const [search, setSearch] = useState('');
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const { shownProducts, productsPerPage, currentPage, setCurrentPage } =
@@ -64,6 +71,7 @@ function Main() {
           productsPerPage={productsPerPage}
         />
       </div>
+      <SnackBar fetchSuccess={fetchSuccess} fetchError={fetchError} />
     </section>
   );
 }
