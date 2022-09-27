@@ -86,7 +86,7 @@ function useValidation({ setValues, values }: UseValidationProps) {
         break;
       case 'description':
         setValues((prev) => ({ ...prev, description: e.target.value }));
-        if (e.target.value.length > 150) {
+        if (e.target.value.length > 110) {
           setErrors({ ...errors, description: 'Too long' });
         } else if (e.target.value.length < 10) {
           setErrors({ ...errors, description: 'Too short' });

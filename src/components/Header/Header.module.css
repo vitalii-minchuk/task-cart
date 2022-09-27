@@ -69,3 +69,26 @@
 .cartBtn:hover {
     filter: brightness(0.8);
 }
+
+@media(max-width: 600px) {
+    .wrapper {
+        height: 60px;
+    }
+
+    .logo {
+        font-size: 24px;
+    }
+
+    .btnsBox{
+        gap: 10px;
+    }
+    
+    .gitBtn {
+        height: 35px;
+    }
+
+    .cartBtn svg {
+        width: 25px;
+        height: 25px;
+    }
+}

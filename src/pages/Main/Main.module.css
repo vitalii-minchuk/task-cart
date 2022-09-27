@@ -1,0 +1,28 @@
+.container {
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+.wrapper {
+    padding: 0 15px;
+}
+
+.appBar {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    padding: 0 0 30px;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+    grid-gap: 2rem;
+}
+
+@media(max-width: 600px) {
+    .appBar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

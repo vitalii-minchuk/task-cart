@@ -1,0 +1,45 @@
+.button {
+    text-transform: uppercase;
+    height: 35px;
+    padding: 0 15px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all .3s;
+}
+
+.small {
+    height: 25px;
+    padding: 0 10px;
+    font-size: 10px;
+}
+
+.button:disabled {
+    opacity: 0.5;
+}
+
+.blue {
+    background-color: #3f50b5;
+    color: white;
+}
+
+.blue:hover {
+    background-color: #757ce8;
+}
+
+.red {
+    background-color: #f50057;
+    color: white;
+}
+
+.red:hover {
+    background-color: #f73378;
+}
+
+.trans {
+    background: transparent;
+}
+
+.trans:hover {
+    border: 1px solid #3f50b5;
+}

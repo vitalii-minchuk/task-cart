@@ -1,0 +1,50 @@
+.box {
+    padding: 20px 10px;
+    height: 270px;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.box:hover {
+    background-color: white;
+    border: 1px solid #777777;
+}
+
+.title {
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.description {
+    text-align: center;
+}
+
+.price {
+    margin-top: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px
+}
+
+.price span { 
+    text-transform: uppercase;
+}
+
+.price p {
+    font-weight: 600;
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px
+
+}
