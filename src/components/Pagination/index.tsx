@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, RefObject, SetStateAction } from 'react';
 import Button from '../common/Button';
 import styles from './Pagination.module.css';
 
@@ -7,6 +7,7 @@ interface PaginationProps {
   setCurrentPage: Dispatch<SetStateAction<number>>;
   productsPerPage: number;
   currentPage: number;
+  scrollRef: RefObject<HTMLInputElement>;
 }
 
 function Pagination({
@@ -14,12 +15,18 @@ function Pagination({
   productsPerPage,
   currentPage,
   setCurrentPage,
+  scrollRef,
 }: PaginationProps) {
   const buttons = [] as Array<number>;
 
   for (let i = 1; i <= Math.ceil(totalItems / productsPerPage); i += 1) {
     buttons.push(i);
   }
+
+  const handleClick = (i: number) => {
+    setCurrentPage(i + 1);
+    scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   if (buttons.length === 1) return null;
 
@@ -29,7 +36,7 @@ function Pagination({
         <Button
           size="small"
           color={button === currentPage ? 'blue' : 'trans'}
-          onClick={() => setCurrentPage(index + 1)}
+          onClick={() => handleClick(index)}
           key={button}
         >
           {button}

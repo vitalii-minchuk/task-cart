@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './Main.module.css';
 import Button from '../../components/common/Button';
 import Pagination from '../../components/Pagination';
@@ -34,12 +34,16 @@ function Main() {
     );
   }, [search, products]);
 
+  const snackBarRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLInputElement>(null);
+
   return (
     <section className={styles.container}>
       <div className={styles.wrapper}>
         <Loader isFetching={isFetching} />
         <div className={styles.appBar}>
           <input
+            ref={scrollRef}
             placeholder="Search..."
             className={styles.input}
             onChange={(e) => setSearch(e.target.value)}
@@ -54,6 +58,7 @@ function Main() {
         <div className={styles.content}>
           {shownProducts.map((product) => (
             <ProductCard
+              snackBarRef={snackBarRef}
               removeItemFromCart={removeItemFromCart}
               addToCart={addToCart}
               isFetching={isFetching}
@@ -65,13 +70,18 @@ function Main() {
           ))}
         </div>
         <Pagination
+          scrollRef={scrollRef}
           setCurrentPage={setCurrentPage}
           totalItems={filteredProducts?.length}
           currentPage={currentPage}
           productsPerPage={productsPerPage}
         />
       </div>
-      <SnackBar fetchSuccess={fetchSuccess} fetchError={fetchError} />
+      <SnackBar
+        ref={snackBarRef}
+        fetchSuccess={fetchSuccess}
+        fetchError={fetchError}
+      />
     </section>
   );
 }

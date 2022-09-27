@@ -30,8 +30,8 @@ function CartProductItem({
     setOpen(true);
   };
 
-  const handleDelete = () => {
-    removeItemFromCart(item.product_id);
+  const handleDelete = async () => {
+    await removeItemFromCart(item.product_id);
     updateProduct({
       title: item.title,
       description: item.description,
@@ -40,7 +40,16 @@ function CartProductItem({
       inCart: false,
     });
 
-    // snackBarRef.current?.showSnackbar();
+    snackBarRef.current?.click();
+  };
+
+  const handleIncrease = async () => {
+    await increaseQuantity(item);
+    snackBarRef.current?.click();
+  };
+  const handleDecrease = async () => {
+    await decreaseQuantity(item);
+    snackBarRef.current?.click();
   };
   return (
     <div className={styles.box}>
@@ -53,7 +62,7 @@ function CartProductItem({
             disabled={isFetching}
             size="small"
             color="blue"
-            onClick={() => decreaseQuantity(item)}
+            onClick={handleDecrease}
             type="button"
           >
             -
@@ -63,7 +72,7 @@ function CartProductItem({
             disabled={isFetching}
             size="small"
             color="blue"
-            onClick={() => increaseQuantity(item)}
+            onClick={handleIncrease}
           >
             +
           </Button>

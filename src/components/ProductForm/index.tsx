@@ -5,11 +5,17 @@ import Button from '../common/Button';
 import styles from './ProductForm.module.css';
 
 interface IProductForm {
+  isFetching: boolean;
   values: Product;
   setValues: Dispatch<SetStateAction<Product>>;
   handleSave: () => void;
 }
-function ProductForm({ values, setValues, handleSave }: IProductForm) {
+function ProductForm({
+  values,
+  setValues,
+  handleSave,
+  isFetching,
+}: IProductForm) {
   const { errors, touched, isValid, handleChange, handleTouche } =
     useValidation({ values, setValues });
 
@@ -71,7 +77,7 @@ function ProductForm({ values, setValues, handleSave }: IProductForm) {
         color="blue"
         type="submit"
         onClick={handleSubmit}
-        disabled={!isValid}
+        disabled={!isValid || isFetching}
       >
         save
       </Button>

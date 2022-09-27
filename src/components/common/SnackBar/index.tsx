@@ -12,7 +12,7 @@ const SnackBar = forwardRef(
     const [show, setShow] = useState(false);
 
     useImperativeHandle(ref, () => ({
-      showSnackbar: () => {
+      click() {
         setShow(true);
       },
     }));
@@ -21,15 +21,15 @@ const SnackBar = forwardRef(
       if (!show) return;
       const timer = setTimeout(() => {
         setShow(false);
-      }, 2000);
+      }, 2500);
 
       return () => clearTimeout(timer);
     }, [show]);
     return (
       <div
-        className={`${styles.box} ${fetchError ? styles.error : ''} ${
-          show ? styles.show : styles.hide
-        }`}
+        className={`${styles.box} ${fetchError ? styles.error : ''}  ${
+          fetchSuccess ? styles.success : ''
+        } ${show ? styles.show : styles.hide}`}
       >
         {fetchError && <h4>{fetchError}</h4>}
         {fetchSuccess && <h4>{fetchSuccess}</h4>}

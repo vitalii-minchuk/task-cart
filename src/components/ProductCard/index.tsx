@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { RefObject, useState } from 'react';
 import { Product, Routes } from '../../types';
 import styles from './ProductCard.module.css';
 import Button from '../common/Button';
@@ -9,6 +9,7 @@ import goBackHome from '../Routing/goBackHome';
 interface ProductCardProps {
   product: Product;
   isFetching: boolean;
+  snackBarRef: RefObject<HTMLDivElement>;
   deleteProduct: (id: string) => void;
   updateProduct: (obj: Product) => void;
   addToCart: (obj: Product) => void;
@@ -21,6 +22,7 @@ function ProductCard({
   deleteProduct,
   updateProduct,
   addToCart,
+  snackBarRef,
   removeItemFromCart,
 }: ProductCardProps) {
   const [open, setOpen] = useState(false);
@@ -29,18 +31,20 @@ function ProductCard({
     setOpen(true);
   };
 
-  const handleDeleteProduct = () => {
-    deleteProduct(product.id!);
+  const handleDeleteProduct = async () => {
+    await deleteProduct(product.id!);
     if (product.inCart) {
-      removeItemFromCart(product.id!);
+      await removeItemFromCart(product.id!);
     }
+    snackBarRef.current?.click();
     goBackHome();
   };
 
-  const handleAddProductToCart = () => {
+  const handleAddProductToCart = async () => {
     const productInCart = { ...product, inCart: true };
-    updateProduct(productInCart);
-    addToCart(productInCart);
+    await updateProduct(productInCart);
+    await addToCart(productInCart);
+    snackBarRef.current?.click();
   };
 
   return (

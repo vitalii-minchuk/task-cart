@@ -33,6 +33,7 @@ function Create() {
       <Loader isFetching={isFetching} />
       {fetchError && <p>{fetchError}</p>}
       <ProductForm
+        isFetching={isFetching}
         values={newProduct}
         handleSave={handleSave}
         setValues={setProduct}

@@ -144,7 +144,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   const decreaseQuantity = useCallback(
     (obj: CartItem) => {
       if (obj.quantity === 1) {
-        setFetchError('It does not seem to work?');
+        setFetchError('It does not seem to work)');
         return;
       }
       const increment = obj.quantity - 1;
@@ -161,7 +161,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     if (!fetchError) return;
     const timer = setTimeout(() => {
       setFetchError('');
-    }, 2000);
+    }, 2500);
 
     return () => clearTimeout(timer);
   }, [fetchError]);
@@ -170,7 +170,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     if (!fetchSuccess) return;
     const timer = setTimeout(() => {
       setFetchSuccess('');
-    }, 2000);
+    }, 2500);
 
     return () => clearTimeout(timer);
   }, [fetchSuccess]);
